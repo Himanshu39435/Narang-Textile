@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daily Expense Manager</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<aside id="side">
+  <div class="brand">Narang Textile</div>
+  <nav>
+    <button data-v="dashboard">Dashboard</button>
+    <button data-v="expense">Add Expense</button>
+    <button data-v="money">Add Money</button>
+    <button data-v="history">Transaction History</button>
+    <button data-v="reports">Reports</button>
+    <button data-v="export">Excel Export</button>
+    <button data-v="settings">Settings</button>
+  </nav>
+</aside>
+<div id="shade"></div>
+<div id="main">
+  <header><button id="menu" aria-label="Menu">&#9776;</button><h2 id="title"></h2><span id="today"></span></header>
+  <main>
+    <section id="v-dashboard"><div id="warn"></div><div id="setup"></div><div class="cards" id="cards"></div></section>
+
+    <section id="v-expense">
+      <form id="fExp" class="card grid">
+        <label>Date<input type="date" name="date" required></label>
+        <label>Expense category<select name="category" id="catSel" required></select></label>
+        <label class="w2">Description / item purchased<input name="desc" required></label>
+        <label>Paid to (person or shop)<input name="party" required></label>
+        <label>Amount (₹)<input type="number" name="amount" min="0.01" step="0.01" required></label>
+        <label>Payment mode<select name="mode"><option>Cash<option>UPI<option>Bank</select></label>
+        <label>Bill number (optional)<input name="bill"></label>
+        <label class="w2">Remarks (optional)<input name="remarks"></label>
+        <div class="w2 row"><button class="btn">Save expense</button><button type="button" class="btn ghost" data-cancel>Cancel</button></div>
+      </form>
+    </section>
+
+    <section id="v-money">
+      <form id="fMon" class="card grid">
+        <label>Date<input type="date" name="date" required></label>
+        <label>Amount (₹)<input type="number" name="amount" min="0.01" step="0.01" required></label>
+        <label>Received from<input name="party" value="Company" required></label>
+        <label>Payment mode<select name="mode"><option>Cash<option>UPI<option>Bank Transfer</select></label>
+        <label class="w2">Remarks<input name="remarks"></label>
+        <div class="w2 row"><button class="btn green">Save money received</button><button type="button" class="btn ghost" data-cancel>Cancel</button></div>
+      </form>
+    </section>
+
+    <section id="v-history">
+      <div class="card filters">
+        <input id="hq" placeholder="Search transactions">
+        <input type="date" id="hf" title="From date"><input type="date" id="ht" title="To date">
+        <select id="hc"></select>
+        <select id="hty"><option value="">All types<option>Received<option>Expense</select>
+        <select id="hs"><option value="new">Latest first<option value="old">Oldest first</select>
+        <button class="btn ghost" id="hreset">Reset</button>
+      </div>
+      <div class="card tw"><table id="tbl"></table></div>
+    </section>
+
+    <section id="v-reports">
+      <div class="card row wrap">
+        <button class="btn ghost" data-r="today">Today</button><button class="btn ghost" data-r="yesterday">Yesterday</button>
+        <button class="btn ghost" data-r="week">This Week</button><button class="btn ghost" data-r="month">This Month</button>
+        <input type="date" id="rFrom"><input type="date" id="rTo"><button class="btn" data-r="custom">Apply range</button>
+      </div>
+      <div id="rOut"></div>
+    </section>
+
+    <section id="v-export">
+      <div class="card">
+        <h3>Download Excel</h3>
+        <p>Creates a .xlsx workbook with three sheets (Expense Summary, All Transactions, Daily Summary). Totals and running balances are live Excel formulas.</p>
+        <label class="chk"><input type="checkbox" id="xf"> Export only the transactions matching the current History filters</label>
+        <p><button class="btn" id="xBtn">Download Excel</button></p>
+      </div>
+    </section>
+
+    <section id="v-settings">
+      <div class="card" id="setOpen"></div>
+      <div class="card">
+        <h3>Backup and restore</h3>
+        <div class="row wrap"><button class="btn" id="bk">Download backup (JSON)</button>
+        <button class="btn ghost" id="rs">Restore from backup</button><input type="file" id="rsf" accept=".json" hidden></div>
+      </div>
+      <div class="card"><h3>Clear all data</h3><p>Deletes the opening balance and every transaction from this browser. Download a backup first.</p>
+        <button class="btn red" id="clr">Clear all data</button></div>
+    </section>
+  </main>
+</div>
+<div id="toasts"></div>
+<div id="modal"><div class="box"><p id="mMsg"></p><div class="row"><button class="btn red" id="mOk">Confirm</button><button class="btn ghost" id="mNo">Cancel</button></div></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<script src="script.js"></script>
+</body>
+      </html>
